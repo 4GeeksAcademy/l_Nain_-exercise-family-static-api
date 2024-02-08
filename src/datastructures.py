@@ -13,22 +13,72 @@ class FamilyStructure:
         self.last_name = last_name
 
         # example list of members
-        self._members = []
+        self._members = [
+            {
+            "id": self._generateId(),
+            "first_name":"John",
+            "last_name":last_name,
+            "age":33,
+            "lucky_number":[7,13,22]
+        },
+        {
+            "id": self._generateId(),
+            "first_name":"Jane",
+            "last_name":last_name,
+            "age":35,
+            "lucky_number":[10,14,3]
+        },
+        {
+            "id": self._generateId(),
+            "first_name":"Jimmy",
+            "last_name":last_name,
+            "age":5,
+            "lucky_number":[1]
+        },
+        ]
 
     # read-only: Use this method to generate random members ID's when adding members into the list
     def _generateId(self):
         return randint(0, 99999999)
 
-    def add_member(self, member):
-        # fill this method and update the return
+    def add_member(self, member): 
+        if not member.get("id"):
+          member["id"] = self._generateId()
+        self._members.append(member)
+
+        print("añadir miembro",member)
         pass
 
     def delete_member(self, id):
+        print(id)
+        for member in self._members:
+            if member["id"] == id :
+                self._members.remove(member)
+                return True
+        return False
         # fill this method and update the return
-        pass
+    
+
+    def update_member(self, id, member):
+        print("actualizando", id)
+        for family_member in self._members:
+            if family_member["id"] == id:
+                self._members.remove(family_member)
+                member["id"] = id
+                self._members.append(member)
+                print("son iguales")
+                return True
+        return False
+    pass
+
+
 
     def get_member(self, id):
         # fill this method and update the return
+        for family_member in self._members:
+            if family_member["id"] == id:
+                return family_member
+        return False
         pass
 
     # this method is done, it returns a list with all the family members
